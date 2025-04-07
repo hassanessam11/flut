@@ -1,0 +1,28 @@
+name: Build APK for Flutter
+
+on:
+  push:
+    branches:
+      - main  # أو الفرع الذي تستخدمه (مثل master)
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # بيئة البناء ستكون على Ubuntu
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2  # لاستنساخ الكود من مستودع GitHub
+
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v2  # إعداد Flutter
+
+    - name: Install dependencies
+      run: flutter pub get  # تثبيت الحزم المطلوبة
+
+    - name: Build APK
+      run: flutter build apk --release  # بناء ملف APK للإصدار النهائي
+
+    - name: Upload APK
+      uses: actions/upload-artifact@v2
+      with:
+        name: app-release
